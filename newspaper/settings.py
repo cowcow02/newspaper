@@ -10,6 +10,8 @@ __copyright__ = 'Copyright 2014, Lucas Ou-Yang'
 
 import logging
 import os
+import tempfile
+
 
 from http.cookiejar import CookieJar as cj
 
@@ -33,8 +35,11 @@ DATA_DIRECTORY = '.newspaper_scraper'
 
 TOP_DIRECTORY = os.path.join(os.path.expanduser("~"), DATA_DIRECTORY)
 if not os.path.exists(TOP_DIRECTORY):
-    os.mkdir(TOP_DIRECTORY)
-
+    try:
+        os.mkdir(TOP_DIRECTORY)
+    except:
+        TOP_DIRECTORY = tempfile.gettempdir()
+        
 # Error log
 LOGFILE = os.path.join(TOP_DIRECTORY, 'newspaper_errors_%s.log' % __version__)
 MONITOR_LOGFILE = os.path.join(
